@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    xmlns:Android="http://schemas.android.com/tools"
+    Android:focusable="true"
+    android:focusableInTouchMode="true"
+    android:orientation="vertical">
+
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+        <android.support.design.widget.TextInputLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="10dp"
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="80dp"
+            android:layout_marginTop="20dp"
+            android:id="@+id/textinput"
+            >
+            <EditText
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="请输入菜名"
+                android:id="@+id/edtix"
+                />
+        </android.support.design.widget.TextInputLayout>
+        <Button
+            android:layout_width="60dp"
+            android:layout_height="wrap_content"
+            android:id="@+id/btn_seach"
+            android:text="搜索"
+            android:layout_alignParentRight="true"
+            android:background="@drawable/shape_button"
+            android:textColor="@color/white"
+            android:layout_marginTop="25dp"
+            android:layout_marginRight="20dp"/>
+    </RelativeLayout>
+
+    <TextView
+        android:id="@+id/sousuo_history"
+        android:layout_width="match_parent"
+        android:text="查看搜索历史"
+        android:textColor="@color/color_myproperty_aialable"
+        android:layout_marginLeft="10dp"
+        android:layout_height="24dp"
+        android:layout_marginBottom="10dp"
+        android:drawableLeft="@drawable/ic_youtube_searched_for_black_24dp">
+    </TextView>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recylerview"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+    </android.support.v7.widget.RecyclerView>
+</LinearLayout>

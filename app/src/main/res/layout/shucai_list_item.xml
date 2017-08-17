@@ -1,0 +1,169 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.v7.widget.CardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    app:cardCornerRadius="6dp"
+    app:cardElevation="5dp"
+    app:cardMaxElevation="3dp"
+    android:paddingBottom="5dp"
+    android:paddingTop="5dp"
+    android:paddingLeft="5dp"
+    android:paddingRight="5dp"
+    android:id="@+id/cardview_shucai">
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@color/color_my_grenn"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            >
+
+            <ImageView
+                android:id="@+id/cai_image"
+                android:layout_width="120dp"
+                android:layout_height="120dp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"
+                android:src="@mipmap/shucai" />
+
+            <TextView
+                android:id="@+id/caipinName"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="菜名："
+                android:textSize="@dimen/text_size_name"
+                android:layout_alignTop="@+id/cai_image"
+                android:layout_alignStart="@+id/peoplenum_peo" />
+
+            <TextView
+                android:id="@+id/name"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/caipinName"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:layout_marginTop="10dp"
+                android:layout_toRightOf="@+id/caipinName"
+                android:text="name"
+                android:textSize="@dimen/text_size_name"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/peoplenum_peo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_toRightOf="@+id/cai_image"
+                android:layout_marginTop="5dp"
+                android:text="适用人数："
+                android:textSize="@dimen/text_size_name"
+                android:layout_below="@+id/name"/>
+
+            <TextView
+                android:id="@+id/peoplenum"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/peoplenum_peo"
+                android:layout_toRightOf="@+id/peoplenum_peo"
+                android:text="1-2"
+                android:textSize="@dimen/text_size_name"
+                android:textStyle="bold|italic" />
+
+            <TextView
+                android:id="@+id/preparetime_peo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/peoplenum_peo"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/cai_image"
+                android:text="准备时间："
+                android:textSize="@dimen/text_size_name" />
+
+            <TextView
+                android:id="@+id/preparetime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/preparetime_peo"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/preparetime_peo"
+                android:text="10-20分钟"
+                android:textSize="@dimen/text_size_name"
+                android:textStyle="italic|bold" />
+
+            <TextView
+                android:id="@+id/cookingtime_peo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/cai_image"
+                android:text="烹饪时间："
+                android:textSize="@dimen/text_size_name"
+                android:layout_below="@id/preparetime_peo"/>
+
+            <TextView
+                android:id="@+id/cookingtime"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/cookingtime_peo"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/cookingtime_peo"
+                android:text="10-20分钟"
+                android:textSize="@dimen/text_size_name"
+                android:textStyle="italic|bold" />
+
+            <TextView
+                android:id="@+id/tag_pro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/cookingtime_peo"
+                android:layout_marginLeft="12dp"
+                android:layout_marginTop="5dp"
+                android:layout_toRightOf="@+id/cai_image"
+                android:text="功效："
+                android:textSize="@dimen/text_size_name" />
+
+            <TextView
+                android:id="@+id/tag"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignBaseline="@+id/tag_pro"
+                android:layout_toRightOf="@+id/tag_pro"
+                android:text="tag"
+                android:textSize="@dimen/text_size_name"
+                android:textStyle="bold|italic"
+                android:layout_marginRight="5dp"/>
+        </RelativeLayout>
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/content_pro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="5dp"
+                android:layout_marginTop="10dp"
+                android:text="描述："
+                android:textSize="12sp" />
+
+            <TextView
+                android:id="@+id/content"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="12sp"
+                android:layout_marginLeft="10dp"
+                android:layout_marginRight="10dp"
+                android:layout_toRightOf="@+id/content_pro"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"/>
+        </RelativeLayout>
+    </LinearLayout>
+
+</android.support.v7.widget.CardView>

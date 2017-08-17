@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#00000000</color>
+    <color name="colorPrimaryDark">#00000000</color>
+    <color name="colorAccent">#b1e3a1</color>
+    <color name="black">#000000</color>
+    <color name="tab_item_bg">#333333</color>
+    <color name="transparent">#00000000</color>
+    <color name="white">#FFFFFF</color>
+    <color name="tab_checked">@color/colorPrimary</color>
+    <color name="tab_unchecked">#757575</color>
+    <!--我的资产-->
+    <color name="color_myproperty_aialable">#f76c6c</color>
+    <color name="color_myproperty_huodong">#80d1f5</color>
+    <color name="color_myproperty_dongjie">#b1e3a1</color>
+    <color name="color_myproperty_zaitou">#feb54c</color>
+    <color name="color_myproperty_daishou">#d084fb</color>
+    <color name="vifrification">#00000000</color>   <!-- 透明 -->
+
+    <color name="color_my_coupon">#FF9900</color>
+    <color name="color_my_coupon_red">#FF6600</color>
+    <color name="color_my_coupon_no">#4A4A4A</color>
+    <color name="color_my_coupon_interest">#7086F1</color>
+    <color name="color_my_coupon_experience">#004F7543</color>
+    <color name="color_my_grenn">#FF678E5A</color>
+</resources>
