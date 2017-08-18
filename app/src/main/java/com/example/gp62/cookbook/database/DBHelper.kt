@@ -8,7 +8,9 @@ import android.database.sqlite.SQLiteOpenHelper
 /**
  * Created by GP62 on 2017/8/17.
  */
-
+/**
+ * 创建数据库
+ */
 class DBHelper : SQLiteOpenHelper {
 
 
@@ -18,7 +20,7 @@ class DBHelper : SQLiteOpenHelper {
     /**
      * CookBook 数据库名字， 1 版本号
      */
-    constructor(context: Context) : super(context, "CookBook", null, 1) {
+    constructor(context: Context) : super(context, "CookBookTest.db", null, 1) {
 
     }
 
@@ -28,6 +30,10 @@ class DBHelper : SQLiteOpenHelper {
     override fun onCreate(db: SQLiteDatabase) {
         //只有第一次创建数据才会执行
         //可以有多张表
+
+        //创建一个存储搜索过的菜名,搜索次数
+        db.execSQL("create table serchnum(name varchar(20),num integer)")
+
     }
 
     override fun onUpgrade(db: SQLiteDatabase, oldVersion: Int, newVersion: Int) {

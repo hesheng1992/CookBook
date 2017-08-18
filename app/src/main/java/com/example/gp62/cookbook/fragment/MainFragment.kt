@@ -14,6 +14,7 @@ import android.widget.Toast
 import com.example.gp62.cookbook.R
 import com.example.gp62.cookbook.adpater.MainSerchAdapter
 import com.example.gp62.cookbook.bean.DataResult
+import com.example.gp62.cookbook.database.DBMangerSql
 import com.example.gp62.cookbook.present.MainPresent
 import com.example.gp62.cookbook.utlis.SpaceItemDecoration
 import rx.Subscription
@@ -45,6 +46,10 @@ class MainFragment : Fragment() {
      * 观察者
      */
     private var subsicption : Subscription?=null
+    /**
+     * 搜索名字
+     */
+    private var serachName :String?=null
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = layoutInflater.inflate(R.layout.main_fragment, container, false)
@@ -88,8 +93,26 @@ class MainFragment : Fragment() {
 
             when (v?.id) {
                 R.id.btn_seach ->{
-                    if (!TextUtils.isEmpty(edtext?.text.toString())){
+                    serachName=edtext?.text.toString()
+                    if (!TextUtils.isEmpty(serachName)){
                         subsicption= mainPre?.getDataMainSerch(edtext?.text.toString(),"20")
+                        Thread(Runnable {
+                            kotlin.run {
+                                //查询当前搜索的自动是否数据库存在
+                                var flag= DBMangerSql.getInstanse(activity)?.qurey(serachName as String)
+                                if (flag as Boolean){
+                                    //执行更新
+                                    DBMangerSql.getInstanse(activity)?.addAndUpateDataBase("serchnum",
+                                            arrayOf("1",serachName ?:""),"update")
+                                }else{
+                                    //执行插入
+                                    DBMangerSql.getInstanse(activity)?.addAndUpateDataBase("serchnum",
+                                            arrayOf(serachName,"1"),"insert")
+                                }
+                            }
+                        }).start()
+                    }else{
+                        showToast("不能输入空的菜名哦！")
                     }
                 }
             }
