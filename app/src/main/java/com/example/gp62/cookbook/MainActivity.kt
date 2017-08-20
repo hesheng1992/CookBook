@@ -2,6 +2,7 @@ package com.example.gp62.cookbook
 
 import android.annotation.SuppressLint
 import android.content.Intent
+import android.graphics.Bitmap
 import android.os.Bundle
 import android.support.design.widget.CollapsingToolbarLayout
 import android.support.design.widget.TabLayout
@@ -16,16 +17,22 @@ import com.example.gp62.cookbook.base.BaseAvtivity
 import com.example.gp62.cookbook.fragment.MainFragment
 import android.graphics.drawable.BitmapDrawable
 import android.support.design.widget.CoordinatorLayout
+import android.view.View
+import android.view.animation.AlphaAnimation
+import android.widget.FrameLayout
+import com.bm.library.Info
+import com.bm.library.PhotoView
 import com.bumptech.glide.Glide
 import com.example.gp62.cookbook.annotion.BindViewID
 import com.example.gp62.cookbook.base.getBindId
 import com.example.gp62.cookbook.fragment.LeiXingFragment
+import com.example.gp62.cookbook.inteface.CallBackPhotoImpl
 import jp.wasabeef.glide.transformations.BlurTransformation
 
 
 
 
-class MainActivity : BaseAvtivity() {
+class MainActivity : BaseAvtivity(),View.OnClickListener{
 
     @BindViewID(getId = R.id.toolbar2)
     private lateinit var toolar: Toolbar
@@ -55,7 +62,18 @@ class MainActivity : BaseAvtivity() {
     @BindViewID(getId = R.id.cood_main)
     private var liner_main: CoordinatorLayout? = null
 
+    @BindViewID(getId=R.id.frame)
+    private var frame : FrameLayout?=null
 
+    //显示全屏照片
+    @BindViewID(getId = R.id.photoview)
+    private var photoView : PhotoView?=null
+
+    @BindViewID(getId = R.id.frame_image)
+    private var inmae :ImageView?=null
+
+    internal var into = AlphaAnimation(0f, 1f)
+    internal var outto = AlphaAnimation(1f, 0f)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activitymain)
@@ -76,6 +94,8 @@ class MainActivity : BaseAvtivity() {
         val drawable = BitmapDrawable(bluBitemapGet(R.mipmap.beijing))
         liner_main?.background = drawable
         addFragment()
+        into.duration=300
+        outto.duration=300
 
     }
 
@@ -97,8 +117,41 @@ class MainActivity : BaseAvtivity() {
         tab.setupWithViewPager(viewpage, false)
         tab.addOnTabSelectedListener(on)
         viewpage.addOnPageChangeListener(viewChange)
-
+        photoView?.setScaleType(ImageView.ScaleType.CENTER_INSIDE)
+        photoView?.enable()
+        photoView?.setOnClickListener(this)
     }
+
+    internal var mInfo: Info?=null
+    //回调显示图片
+     var photoviewShowImpl=object :CallBackPhotoImpl{
+        override fun showPhotoView(string: String, phView: PhotoView) {
+            var p=phView
+            p.isDrawingCacheEnabled=true
+            val createBitmap = Bitmap.createBitmap(p.getDrawingCache(true))
+            photoView?.setImageBitmap(createBitmap)
+            mInfo=p.info
+            frame?.visibility=View.VISIBLE
+            inmae?.startAnimation(into)
+            photoView?.visibility=View.VISIBLE
+            photoView?.animaFrom(mInfo)
+        }
+    }
+
+    override fun onClick(v: View?) {
+        when(v?.id){
+            R.id.photoview ->{
+                image.startAnimation(outto)
+                photoView?.animaTo(mInfo,object :Runnable{
+                    override fun run() {
+                        frame?.visibility=View.GONE
+                    }
+                })
+            }
+
+        }
+    }
+
 
     /**
      * viewPager页面改变时监听

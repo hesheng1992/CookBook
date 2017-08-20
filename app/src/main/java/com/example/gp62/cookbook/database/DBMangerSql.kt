@@ -69,7 +69,6 @@ class DBMangerSql private constructor(context: Context) {
     open fun qureyData() :ArrayList<HashMap<String,Int>>{
         synchronized(DBMangerSql.javaClass){
             val dbDataBase = dbHlper.writableDatabase
-            var map=HashMap<String,Int>()
             //返回name和对应的搜索次数
             var list=ArrayList<HashMap<String,Int>>()
             //查询前20条 降序排序
@@ -77,6 +76,7 @@ class DBMangerSql private constructor(context: Context) {
             //返回cursor
             val rawQuery = dbDataBase.rawQuery(sql, null)
             while (rawQuery.moveToNext()){
+                var map=HashMap<String,Int>()
                 //获取名字
                 val string = rawQuery.getString(rawQuery.getColumnIndex("name"))
                 val num = rawQuery.getInt(rawQuery.getColumnIndex("num"))

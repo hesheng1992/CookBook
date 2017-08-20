@@ -1,25 +1,33 @@
 package com.example.gp62.cookbook.adpater
 
 import android.content.Context
+import android.graphics.Bitmap
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
+import com.bm.library.Info
+import com.bm.library.PhotoView
 import com.bumptech.glide.Glide
 import com.example.gp62.cookbook.R
 import com.example.gp62.cookbook.bean.DataResult
+import com.example.gp62.cookbook.inteface.CallBackPhotoImpl
 
 /**
  * Created by GP62 on 2017/8/16.
  */
-class MainSerchAdapter(context :Context,data :ArrayList<DataResult.ResultBeanX.ResultBean.ListBean>) : RecyclerView.Adapter<MainSerchAdapter.ViewHold>() {
+class MainSerchAdapter(context :Context,data :ArrayList<DataResult.ResultBeanX.ResultBean.ListBean>
+    ,showPView :CallBackPhotoImpl)
+    : RecyclerView.Adapter<MainSerchAdapter.ViewHold>() {
 
     var listData=data
     private val context=context
 
+    private var info :Info?=null
 
+    private var showImpl=showPView
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHold {
         val inflate = LayoutInflater.from(context).inflate(R.layout.shucai_list_item, parent,false)
@@ -38,7 +46,12 @@ class MainSerchAdapter(context :Context,data :ArrayList<DataResult.ResultBeanX.R
         Glide.with(context).load(listName.pic)
                 .error(R.mipmap.bar2)
                 .into(viewHold?.image)
-
+        viewHold?.image?.disenable()
+        viewHold?.image?.scaleType=ImageView.ScaleType.CENTER_CROP
+        viewHold?.image?.setOnClickListener {
+            v ->
+                showImpl.showPhotoView("",viewHold?.image)
+        }
     }
 
     override fun getItemCount(): Int {
@@ -59,7 +72,7 @@ class MainSerchAdapter(context :Context,data :ArrayList<DataResult.ResultBeanX.R
         //菜名
         var textName=view.findViewById(R.id.name) as TextView
         //图片
-        var image=view.findViewById(R.id.cai_image) as ImageView
+        var image=view.findViewById(R.id.cai_image) as PhotoView
         //使用人数
         var peoplenum=view.findViewById(R.id.peoplenum) as TextView
         /**

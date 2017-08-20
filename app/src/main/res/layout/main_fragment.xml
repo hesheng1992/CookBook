@@ -38,21 +38,27 @@
             android:layout_marginRight="20dp"/>
     </RelativeLayout>
 
-    <TextView
+    <Button
         android:id="@+id/sousuo_history"
-        android:layout_width="match_parent"
+        android:layout_width="130dp"
         android:text="查看搜索历史"
-        android:textColor="@color/color_myproperty_aialable"
+        android:textColor="@color/white"
+        android:background="@drawable/shape_button"
         android:layout_marginLeft="10dp"
-        android:layout_height="24dp"
+        android:layout_height="30dp"
         android:layout_marginBottom="10dp"
-        android:drawableLeft="@drawable/ic_youtube_searched_for_black_24dp">
-    </TextView>
+        >
+    </Button>
+    <RelativeLayout
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
+    </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recylerview"
         android:layout_width="match_parent"
         android:layout_height="match_parent">
 
     </android.support.v7.widget.RecyclerView>
+
 </LinearLayout>

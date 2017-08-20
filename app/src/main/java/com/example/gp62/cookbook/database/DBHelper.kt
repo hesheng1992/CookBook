@@ -20,7 +20,7 @@ class DBHelper : SQLiteOpenHelper {
     /**
      * CookBook 数据库名字， 1 版本号
      */
-    constructor(context: Context) : super(context, "CookBookTest.db", null, 1) {
+    constructor(context: Context) : super(context, "CookBookTest2.db", null, 1) {
 
     }
 

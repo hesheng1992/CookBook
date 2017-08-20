@@ -21,7 +21,7 @@
             android:layout_height="wrap_content"
             >
 
-            <ImageView
+            <com.bm.library.PhotoView
                 android:id="@+id/cai_image"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
@@ -29,7 +29,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginRight="10dp"
                 android:src="@mipmap/shucai" />
-
             <TextView
                 android:id="@+id/caipinName"
                 android:layout_width="wrap_content"
@@ -147,17 +146,17 @@
                 android:id="@+id/content_pro"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="5dp"
+                android:layout_marginLeft="7dp"
                 android:layout_marginTop="10dp"
                 android:text="描述："
-                android:textSize="12sp" />
+                android:textSize="13sp" />
 
             <TextView
                 android:id="@+id/content"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text=""
-                android:textSize="12sp"
+                android:textSize="13sp"
                 android:layout_marginLeft="10dp"
                 android:layout_marginRight="10dp"
                 android:layout_toRightOf="@+id/content_pro"

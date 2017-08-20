@@ -8,12 +8,14 @@ import android.text.TextUtils
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Button
-import android.widget.EditText
-import android.widget.Toast
+import android.widget.*
+import com.example.gp62.cookbook.MainActivity
 import com.example.gp62.cookbook.R
+import com.example.gp62.cookbook.adpater.HistroySerachAdapter
 import com.example.gp62.cookbook.adpater.MainSerchAdapter
+import com.example.gp62.cookbook.bean.BaseData
 import com.example.gp62.cookbook.bean.DataResult
+import com.example.gp62.cookbook.bean.HistorySerchData
 import com.example.gp62.cookbook.database.DBMangerSql
 import com.example.gp62.cookbook.present.MainPresent
 import com.example.gp62.cookbook.utlis.SpaceItemDecoration
@@ -25,7 +27,7 @@ import rx.Subscription
 /**
  * 搜索
  */
-class MainFragment : Fragment() {
+class  MainFragment : Fragment() {
 
     private var recycler: RecyclerView? = null
 
@@ -37,7 +39,7 @@ class MainFragment : Fragment() {
 
     private var adpater: MainSerchAdapter? = null
 
-    private var listData: ArrayList<DataResult.ResultBeanX.ResultBean.ListBean>? = null
+    private var listData: ArrayList<BaseData>? = null
     /**
      * 专门做逻辑处理的present层
      */
@@ -50,16 +52,31 @@ class MainFragment : Fragment() {
      * 搜索名字
      */
     private var serachName :String?=null
+    /**
+     * 搜索结果适配器
+     */
+    private var historyAdapter :HistroySerachAdapter?=null
+    /**
+     * 判断是否改变布局
+     */
+    private var isChange=false
+
+    private var textChange :Button?=null
+
+
 
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
         val view = layoutInflater.inflate(R.layout.main_fragment, container, false)
         recycler = view.findViewById(R.id.recylerview) as RecyclerView
         edtext = view.findViewById(R.id.edtix) as EditText
         btn = view.findViewById(R.id.btn_seach) as Button
+        textChange=view.findViewById(R.id.sousuo_history) as Button
+        textChange?.setOnClickListener(onClick)
         btn?.setOnClickListener(onClick)
         recycler?.layoutManager = LinearLayoutManager(activity)
         recycler?.addItemDecoration(SpaceItemDecoration(30))
-        adpater = MainSerchAdapter(activity, ArrayList())
+        adpater = MainSerchAdapter(activity, ArrayList(),(activity as MainActivity).photoviewShowImpl)
+        historyAdapter=HistroySerachAdapter(activity, ArrayList())
         recycler?.adapter = adpater
         mainPre= MainPresent(activity,this@MainFragment)
         return view
@@ -72,16 +89,31 @@ class MainFragment : Fragment() {
     /**
      * 加载数据到适配器
      */
-    fun getData(sera: ArrayList<DataResult.ResultBeanX.ResultBean.ListBean>) {
+    fun getData(sera: ArrayList<BaseData>) {
         if (listData == null) {
-            listData = ArrayList<DataResult.ResultBeanX.ResultBean.ListBean>()
+            listData = ArrayList<BaseData>()
         }
         if (sera != null) {
             listData?.clear()
             listData?.addAll(sera)
+            if (listData!=null){
+                adpater?.addData(listData as ArrayList<DataResult.ResultBeanX.ResultBean.ListBean>)
+            }
         }
-        if (listData!=null){
-            adpater?.addData(listData as ArrayList<DataResult.ResultBeanX.ResultBean.ListBean>)
+    }
+    /**
+     * 加载数据到适配器
+     */
+    fun getHisData(sera: ArrayList<BaseData>) {
+        if (listData == null) {
+            listData = ArrayList<BaseData>()
+        }
+        if (sera != null) {
+            listData?.clear()
+            listData?.addAll(sera)
+            if (listData!=null){
+                historyAdapter?.addData(listData as ArrayList<HistorySerchData>)
+            }
         }
     }
 
@@ -95,6 +127,8 @@ class MainFragment : Fragment() {
                 R.id.btn_seach ->{
                     serachName=edtext?.text.toString()
                     if (!TextUtils.isEmpty(serachName)){
+                        isChange=true
+                        changeAdapter()
                         subsicption= mainPre?.getDataMainSerch(edtext?.text.toString(),"20")
                         Thread(Runnable {
                             kotlin.run {
@@ -115,6 +149,35 @@ class MainFragment : Fragment() {
                         showToast("不能输入空的菜名哦！")
                     }
                 }
+                //点击切换按钮
+                R.id.sousuo_history ->{
+                    changeAdapter()
+                }
+            }
+        }
+    }
+
+    /**
+     * 更换适配器
+     */
+    fun changeAdapter(){
+        synchronized(this){
+            if (isChange){
+                textChange?.text="点击查看搜索历史"
+                if (adpater==null){
+                    adpater=MainSerchAdapter(activity, ArrayList(),(activity as MainActivity).photoviewShowImpl)
+                }
+                recycler?.adapter=adpater
+                isChange=false
+            }else{
+                textChange?.text="点击查看搜索结果"
+                if (historyAdapter==null){
+                    historyAdapter= HistroySerachAdapter(activity, ArrayList())
+                }
+                recycler?.adapter=historyAdapter
+                isChange=true
+                //加载数据库的数据
+                mainPre?.changeHistoryData()
             }
         }
     }
