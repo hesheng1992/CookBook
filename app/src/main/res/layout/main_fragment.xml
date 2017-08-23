@@ -13,16 +13,16 @@
         <android.support.design.widget.TextInputLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="10dp"
+            android:layout_marginBottom="7dp"
             android:layout_marginLeft="10dp"
             android:layout_marginRight="80dp"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="7dp"
             android:id="@+id/textinput"
             >
             <EditText
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="请输入菜名"
+                android:hint="请输入蔬菜名(肉类或者蔬菜)"
                 android:id="@+id/edtix"
                 />
         </android.support.design.widget.TextInputLayout>
@@ -34,7 +34,8 @@
             android:layout_alignParentRight="true"
             android:background="@drawable/shape_button"
             android:textColor="@color/white"
-            android:layout_marginTop="25dp"
+            android:layout_marginTop="8dp"
+            android:textSize="15sp"
             android:layout_marginRight="20dp"/>
     </RelativeLayout>
 
@@ -51,8 +52,28 @@
     </Button>
     <RelativeLayout
         android:layout_width="wrap_content"
-        android:layout_height="wrap_content">
-
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:id="@+id/relative_seach"
+        android:layout_marginLeft="10dp">
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索名称"
+            android:id="@+id/secah_nam"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            />
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="搜索次数"
+            android:layout_toRightOf="@+id/secah_nam"
+            android:layout_marginLeft="120dp"
+            android:id="@+id/seach_num"
+            android:textColor="@color/white"
+            android:textSize="15sp"
+            />
     </RelativeLayout>
     <android.support.v7.widget.RecyclerView
         android:id="@+id/recylerview"

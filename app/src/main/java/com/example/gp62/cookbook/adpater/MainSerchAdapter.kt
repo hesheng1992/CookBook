@@ -1,7 +1,10 @@
 package com.example.gp62.cookbook.adpater
 
 import android.content.Context
+import android.content.Intent
 import android.graphics.Bitmap
+import android.os.Bundle
+import android.os.Parcelable
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -12,6 +15,7 @@ import com.bm.library.Info
 import com.bm.library.PhotoView
 import com.bumptech.glide.Glide
 import com.example.gp62.cookbook.R
+import com.example.gp62.cookbook.activity.ShowProcessActivity
 import com.example.gp62.cookbook.bean.DataResult
 import com.example.gp62.cookbook.inteface.CallBackPhotoImpl
 
@@ -24,9 +28,9 @@ class MainSerchAdapter(context :Context,data :ArrayList<DataResult.ResultBeanX.R
 
     var listData=data
     private val context=context
-
-    private var info :Info?=null
-
+    /**
+     * 获取回调显示图片接口
+     */
     private var showImpl=showPView
 
     override fun onCreateViewHolder(parent: ViewGroup?, viewType: Int): ViewHold {
@@ -52,6 +56,16 @@ class MainSerchAdapter(context :Context,data :ArrayList<DataResult.ResultBeanX.R
             v ->
                 showImpl.showPhotoView("",viewHold?.image)
         }
+        viewHold?.view?.setOnClickListener(
+                {
+                    v ->
+                    var bundle=Bundle()
+                    bundle.putParcelable("process",listName)
+                    var intent=Intent(context,ShowProcessActivity::class.java)
+                    intent.putExtra("bundle",bundle)
+                    context.startActivity(intent)
+                }
+        )
     }
 
     override fun getItemCount(): Int {
@@ -69,6 +83,7 @@ class MainSerchAdapter(context :Context,data :ArrayList<DataResult.ResultBeanX.R
     }
 
     class ViewHold(view :View) : RecyclerView.ViewHolder(view){
+        var view=view
         //菜名
         var textName=view.findViewById(R.id.name) as TextView
         //图片

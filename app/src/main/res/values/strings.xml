@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">CookBook</string>
+    <string name="image_button_content_description">Change state of section</string>
 </resources>

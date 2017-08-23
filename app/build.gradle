@@ -8,7 +8,7 @@ android {
     compileSdkVersion 25
     buildToolsVersion "26.0.1"
     defaultConfig {
-        applicationId "com.example.gp62.cookbook"
+        applicationId "com.example.gp62.cookbook"//最终打包时会生成的应用包名，会替换在manifst中的packge名  尽量保持一致
         minSdkVersion 21
         targetSdkVersion 25
         versionCode 1
@@ -20,6 +20,14 @@ android {
             }
         }
     }
+
+    //加快构建速度
+    dexOptions {
+        preDexLibraries true//声明是否预先编译依赖库，
+        maxProcessCount 8  //设置进程运行过程中最大使用线程数
+        javaMaxHeapSize "2048m"//设置DEX编译器的最大堆大小，
+    }
+
     buildTypes {
         release {
             minifyEnabled false
@@ -64,7 +72,7 @@ dependencies {
 
     compile 'com.github.bumptech.glide:glide:3.7.0'
     compile 'jp.wasabeef:glide-transformations:2.0.1'
-     //图片缩放工具
+    //图片缩放工具
     compile 'com.bm.photoview:library:1.4.1'
 
 }

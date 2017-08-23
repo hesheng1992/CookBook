@@ -6,9 +6,9 @@
     <color name="black">#000000</color>
     <color name="tab_item_bg">#333333</color>
     <color name="transparent">#00000000</color>
-    <color name="white">#FFFFFF</color>
+    <color name="white">#c8faf2</color>
     <color name="tab_checked">@color/colorPrimary</color>
-    <color name="tab_unchecked">#757575</color>
+    <color name="tab_unchecked">#FFFFFF</color>
     <!--我的资产-->
     <color name="color_myproperty_aialable">#f76c6c</color>
     <color name="color_myproperty_huodong">#80d1f5</color>
@@ -23,4 +23,9 @@
     <color name="color_my_coupon_interest">#7086F1</color>
     <color name="color_my_coupon_experience">#004F7543</color>
     <color name="color_my_grenn">#FF678E5A</color>
+    <color name="color_my_grenn_two">#FFA9ED8F</color>
+    <color name="color_my_baise">#FFE2FCF1</color>
+    <color name="color_white">#FFFFFF</color>
+    <color name="color_white_huise">#FFD4E1E1</color>
+    <color name="color_tanc_half">#55333333</color><!--半透明-->
 </resources>

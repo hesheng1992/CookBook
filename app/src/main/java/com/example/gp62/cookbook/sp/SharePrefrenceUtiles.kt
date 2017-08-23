@@ -11,11 +11,18 @@ import com.example.gp62.cookbook.bitmap.blurBitmap
 /**
  * Created by GP62 on 2017/8/16.
  */
+//全局的sharepre
+var sharePrefensUtils: SharedPreferences?=null
+
+fun initSharPrefence(context: Context) :SharedPreferences{
+    var sharePrefensUtils=context.getSharedPreferences("初始化",Context.MODE_PRIVATE)
+    return sharePrefensUtils
+}
 
 fun setBitmap(context :Context){
-    var shar: SharedPreferences=context.getSharedPreferences("获取分类页面的主页面",Context.MODE_PRIVATE)
+
     val drawable = BitmapDrawable(bluBitemapGet(R.mipmap.shucai2,context))
-    val edit = shar.edit()
+    val edit = sharePrefensUtils?.edit()
 
 }
 /**
@@ -26,4 +33,18 @@ fun bluBitemapGet(res :Int,context: Context) : Bitmap {
     //模糊图片
     var bitimg= blurBitmap(Bitmap.createBitmap(bmpimg),context)
     return bitimg
+}
+
+fun setString(strname: String,string: String){
+    val edit = sharePrefensUtils?.edit()
+    edit?.putString(strname,string)
+    edit?.commit()
+}
+
+/**
+ * 得到string
+ */
+fun getStr(strname: String,strDefult :String) :String{
+    val string = sharePrefensUtils?.getString(strname,strDefult)
+    return string ?:strDefult
 }

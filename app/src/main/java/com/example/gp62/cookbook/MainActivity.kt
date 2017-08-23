@@ -22,12 +22,10 @@ import android.view.animation.AlphaAnimation
 import android.widget.FrameLayout
 import com.bm.library.Info
 import com.bm.library.PhotoView
-import com.bumptech.glide.Glide
 import com.example.gp62.cookbook.annotion.BindViewID
 import com.example.gp62.cookbook.base.getBindId
 import com.example.gp62.cookbook.fragment.LeiXingFragment
 import com.example.gp62.cookbook.inteface.CallBackPhotoImpl
-import jp.wasabeef.glide.transformations.BlurTransformation
 
 
 
@@ -89,9 +87,9 @@ class MainActivity : BaseAvtivity(),View.OnClickListener{
         //设置模糊图片
 //        image.setImageBitmap(bluBitemapGet(R.mipmap.shucai))
         //设置模糊图片
-        Glide.with(this).load(R.mipmap.shucai).bitmapTransform(BlurTransformation(this,25)).into(image)
+//        Glide.with(this).load(R.mipmap.shucai).bitmapTransform(BlurTransformation(this,25)).into(image)
         //模糊图片
-        val drawable = BitmapDrawable(bluBitemapGet(R.mipmap.beijing))
+        val drawable = BitmapDrawable(bluBitemapGet(R.drawable.main_back))
         liner_main?.background = drawable
         addFragment()
         into.duration=300
@@ -127,8 +125,11 @@ class MainActivity : BaseAvtivity(),View.OnClickListener{
      var photoviewShowImpl=object :CallBackPhotoImpl{
         override fun showPhotoView(string: String, phView: PhotoView) {
             var p=phView
+            //从imageview中获取设置的图片
             p.isDrawingCacheEnabled=true
             val createBitmap = Bitmap.createBitmap(p.getDrawingCache(true))
+            p.isDrawingCacheEnabled=false
+
             photoView?.setImageBitmap(createBitmap)
             mInfo=p.info
             frame?.visibility=View.VISIBLE
@@ -148,7 +149,6 @@ class MainActivity : BaseAvtivity(),View.OnClickListener{
                     }
                 })
             }
-
         }
     }
 

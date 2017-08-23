@@ -71,8 +71,8 @@ fun blurBitmap(bitmap: Bitmap ,context :Context): Bitmap {
     val allIn = Allocation.createFromBitmap(rs, bitmap)
     val allOut = Allocation.createFromBitmap(rs, outBitmap)
 
-    //Set the radius of the blur
-    blurScript.setRadius(25f)
+    //设置模糊程度，最大是25
+    blurScript.setRadius(15f)
 
     //Perform the Renderscript
     blurScript.setInput(allIn)

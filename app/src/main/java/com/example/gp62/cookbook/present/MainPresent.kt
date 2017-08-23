@@ -1,6 +1,10 @@
 package com.example.gp62.cookbook.present
 
 import android.content.Context
+import android.os.Handler
+import android.os.Message
+import com.example.gp62.cookbook.MainActivity
+import com.example.gp62.cookbook.base.MAINCALLBACKQURAY
 import com.example.gp62.cookbook.base.getApiData
 import com.example.gp62.cookbook.bean.BaseData
 import com.example.gp62.cookbook.bean.DataResult
@@ -15,13 +19,18 @@ import rx.schedulers.Schedulers
 /**
  * Created by GP62 on 2017/8/16.
  */
-class MainPresent(context: Context, main: MainFragment) {
+class MainPresent(context: Context, main: MainFragment,handler: Handler) {
 
     private val context = context
-
+    /**
+     * 获取依赖显示界面
+     */
     private var main = main
+
+    private var mHandler=handler
     /**
      * 搜索菜谱
+     * https://way.jd.com/jisuapi/search?keyword=白菜&num=2&appkey=2672dcad901292807247685185071f36
      */
     open fun getDataMainSerch(name: String, num: String) : Subscription {
         //创建接口将用于请求的接口
@@ -31,10 +40,15 @@ class MainPresent(context: Context, main: MainFragment) {
                 .observeOn(AndroidSchedulers.mainThread())//指定回调在主线程
                 .subscribe({
                     t -> main.getData(t.result.result.list as ArrayList<BaseData>)
-                },{
-                    t ->  main.showToast(t.toString())
+                    main.dissLoading()
                 },{
 
+                    t ->
+                    main.dissLoading()
+                    main.showToast(t.toString())
+
+                },{
+                    main.dissLoading()
                 })
 //        HttpUtils.setBaseUrl(baseUrl)
 //        HttpUtils.execte(context,"jisuapi/search?&keyword="+name+"&num="+num+"&appkey=2672dcad901292807247685185071f36","GET"
@@ -68,12 +82,31 @@ class MainPresent(context: Context, main: MainFragment) {
                     listData.add(data)
                 }
             }
-            var i=0
-
-
         }
         main.getHisData(listData)
+        main.dissLoading()
     }
 
+    fun getQurayData(){
+        //初始化加载第一条数据库数据
+        Thread(Runnable {
+            kotlin.run {
+                //加载数据库的数据
+                var listQuretData=DBMangerSql.getInstanse(context)?.qureyData()
+                if (listQuretData!=null&&listQuretData.size>0){
+                    var stringName :String=""
+                    val entries = listQuretData[0].entries
+                    entries.forEach{
+                        stringName=it.key
+                    }
+                    var message=Message()
+                    message.what= MAINCALLBACKQURAY
+                    message.obj=stringName
+                    mHandler.sendMessage(message)
+
+                }
+            }
+        }).start()
+    }
 }
 

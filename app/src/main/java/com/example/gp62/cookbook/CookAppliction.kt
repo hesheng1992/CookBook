@@ -2,6 +2,8 @@ package com.example.gp62.cookbook
 
 import android.app.Application
 import com.example.gp62.cookbook.base.baseUrl
+import com.example.gp62.cookbook.sp.initSharPrefence
+import com.example.gp62.cookbook.sp.sharePrefensUtils
 import com.google.gson.Gson
 import retrofit2.adapter.rxjava.RxJavaCallAdapterFactory
 
@@ -45,6 +47,7 @@ class CookAppliction : Application() {
 ////                .setHttpCache(Cache)//设置Okhttp缓存，在缓存模式为DEFAULT才起作用
 ////                .addConverterFactory(GsonConverterFactory.create(Gson()))//本框架没有采用Retrofit的Gson转化，所以不用配置
 //                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-
+        //初始化share
+        sharePrefensUtils= initSharPrefence(applicationContext)
     }
 }
