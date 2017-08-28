@@ -36,7 +36,8 @@
             android:name=".activity.CapCamerShibieAcitivity"
             android:screenOrientation="portrait" />
         <activity android:name=".activity.SplashActivity" />
-        <activity android:name=".activity.ShowProcessActivity"></activity>
+        <activity android:name=".activity.ShowProcessActivity" />
+        <activity android:name=".activity.LeixShowActivity"></activity>
     </application>
 
 </manifest>

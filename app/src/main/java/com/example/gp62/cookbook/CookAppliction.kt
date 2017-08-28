@@ -49,5 +49,6 @@ class CookAppliction : Application() {
 //                .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
         //初始化share
         sharePrefensUtils= initSharPrefence(applicationContext)
+
     }
 }

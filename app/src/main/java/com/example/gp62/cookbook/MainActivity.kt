@@ -26,8 +26,7 @@ import com.example.gp62.cookbook.annotion.BindViewID
 import com.example.gp62.cookbook.base.getBindId
 import com.example.gp62.cookbook.fragment.LeiXingFragment
 import com.example.gp62.cookbook.inteface.CallBackPhotoImpl
-
-
+import org.jetbrains.anko.find
 
 
 class MainActivity : BaseAvtivity(),View.OnClickListener{
@@ -60,18 +59,6 @@ class MainActivity : BaseAvtivity(),View.OnClickListener{
     @BindViewID(getId = R.id.cood_main)
     private var liner_main: CoordinatorLayout? = null
 
-    @BindViewID(getId=R.id.frame)
-    private var frame : FrameLayout?=null
-
-    //显示全屏照片
-    @BindViewID(getId = R.id.photoview)
-    private var photoView : PhotoView?=null
-
-    @BindViewID(getId = R.id.frame_image)
-    private var inmae :ImageView?=null
-
-    internal var into = AlphaAnimation(0f, 1f)
-    internal var outto = AlphaAnimation(1f, 0f)
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activitymain)
@@ -83,6 +70,12 @@ class MainActivity : BaseAvtivity(),View.OnClickListener{
      * 初始化
      */
     private fun intitView() {
+        frame=find(R.id.frame)
+        photoView=find(R.id.photoview)
+        inmae=find(R.id.frame_image)
+        photoView?.setScaleType(ImageView.ScaleType.CENTER_INSIDE)
+        photoView?.enable()
+        photoView?.setOnClickListener(this)
         setSupportActionBar(toolar)
         //设置模糊图片
 //        image.setImageBitmap(bluBitemapGet(R.mipmap.shucai))
@@ -115,42 +108,10 @@ class MainActivity : BaseAvtivity(),View.OnClickListener{
         tab.setupWithViewPager(viewpage, false)
         tab.addOnTabSelectedListener(on)
         viewpage.addOnPageChangeListener(viewChange)
-        photoView?.setScaleType(ImageView.ScaleType.CENTER_INSIDE)
-        photoView?.enable()
-        photoView?.setOnClickListener(this)
     }
 
-    internal var mInfo: Info?=null
-    //回调显示图片
-     var photoviewShowImpl=object :CallBackPhotoImpl{
-        override fun showPhotoView(string: String, phView: PhotoView) {
-            var p=phView
-            //从imageview中获取设置的图片
-            p.isDrawingCacheEnabled=true
-            val createBitmap = Bitmap.createBitmap(p.getDrawingCache(true))
-            p.isDrawingCacheEnabled=false
 
-            photoView?.setImageBitmap(createBitmap)
-            mInfo=p.info
-            frame?.visibility=View.VISIBLE
-            inmae?.startAnimation(into)
-            photoView?.visibility=View.VISIBLE
-            photoView?.animaFrom(mInfo)
-        }
-    }
 
-    override fun onClick(v: View?) {
-        when(v?.id){
-            R.id.photoview ->{
-                image.startAnimation(outto)
-                photoView?.animaTo(mInfo,object :Runnable{
-                    override fun run() {
-                        frame?.visibility=View.GONE
-                    }
-                })
-            }
-        }
-    }
 
 
     /**

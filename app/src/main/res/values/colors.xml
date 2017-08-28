@@ -28,4 +28,5 @@
     <color name="color_white">#FFFFFF</color>
     <color name="color_white_huise">#FFD4E1E1</color>
     <color name="color_tanc_half">#55333333</color><!--半透明-->
+    <color name="color_half_black">#FF5B5959</color>
 </resources>

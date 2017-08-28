@@ -3,6 +3,7 @@ package com.example.gp62.cookbook.fragment
 import android.os.Bundle
 import android.os.Message
 import android.support.v4.app.Fragment
+import android.support.v4.widget.SwipeRefreshLayout
 import android.support.v7.widget.LinearLayoutManager
 import android.support.v7.widget.RecyclerView
 import android.text.TextUtils
@@ -23,6 +24,8 @@ import com.example.gp62.cookbook.inteface.RecyclerViewOnitemListner
 import com.example.gp62.cookbook.present.MainPresent
 import com.example.gp62.cookbook.utlis.SpaceItemDecoration
 import com.example.gp62.cookbook.view.dialog.LoadingDialog
+import org.jetbrains.anko.doAsync
+import org.jetbrains.anko.find
 import rx.Subscription
 
 /**
@@ -31,7 +34,7 @@ import rx.Subscription
 /**
  * 搜索
  */
-class MainFragment : Fragment() {
+class MainFragment : BaseFragment() {
 
     private var recycler: RecyclerView? = null
 
@@ -67,17 +70,17 @@ class MainFragment : Fragment() {
 
     private var textChange: Button? = null
     /**
-     * 加载对话框
-     */
-    private var loading: LoadingDialog? = null
-    /**
      * 搜索名称次数
      */
     private var relate: RelativeLayout? = null
 
+    private var mainSwip: SwipeRefreshLayout?=null
+
     override fun onCreateView(inflater: LayoutInflater?, container: ViewGroup?, savedInstanceState: Bundle?): View? {
-        val view = layoutInflater.inflate(R.layout.main_fragment, container, false)
+        val view =setContentView(R.layout.main_fragment, container)
         recycler = view.findViewById(R.id.recylerview) as RecyclerView
+        mainSwip=view.find(R.id.main_swip)
+        setSwipLayput(mainSwip!!)
         edtext = view.findViewById(R.id.edtix) as EditText
         btn = view.findViewById(R.id.btn_seach) as Button
         textChange = view.findViewById(R.id.sousuo_history) as Button
@@ -91,13 +94,23 @@ class MainFragment : Fragment() {
         historyAdapter = HistroySerachAdapter(activity, ArrayList())
         historyAdapter?.getCallBack(recyclerItemOnclick)//传入回调对象引用
         recycler?.adapter = adpater
-        mainPre = MainPresent(activity, this@MainFragment,handler = (activity as MainActivity).handler)
-        loading = LoadingDialog(activity, R.mipmap.greenloading)
+        mainPre = MainPresent(activity, this@MainFragment)
+        mainPre?.setMainFragment()
+        var loadi= LoadingDialog(activity,R.mipmap.greenloading)
+        setLoading(loadi)
+        mainSwip?.isRefreshing=true
+        //初始化查询数据库，加载搜索最多的名字
+        mainPre?.getQurayData()
         return view
     }
 
-    override fun onResume() {
-        super.onResume()
+    override fun startRefresh() {
+        if (!TextUtils.isEmpty(serachName)){
+            subsicption = mainPre?.getDataMainSerch(serachName as String, "20")
+        }else{
+            //初始化查询数据库，加载搜索最多的名字
+            mainPre?.getQurayData()
+        }
 
     }
 
@@ -146,7 +159,7 @@ class MainFragment : Fragment() {
                         showDiolg()
                         isChange = true
                         changeAdapter()
-                        subsicption = mainPre?.getDataMainSerch(edtext?.text.toString(), "20")
+                        subsicption = mainPre?.getDataMainSerch(serachName as String, "20")
                         Thread(Runnable {
                             kotlin.run {
                                 //查询当前搜索的自动是否数据库存在
@@ -183,7 +196,19 @@ class MainFragment : Fragment() {
             changeAdapter()
             showDiolg()
             subsicption = mainPre?.getDataMainSerch(string, "20")
+            doAsync {
+                //执行更新
+                DBMangerSql.getInstanse(activity)?.addAndUpateDataBase("serchnum",
+                        arrayOf("1", string ?: ""), "update")
+            }
         }
+    }
+
+    /**
+     * 初始化时加载数据
+     */
+    fun initData(string: String){
+        subsicption = mainPre?.getDataMainSerch(string, "20")
     }
 
     /**
@@ -218,21 +243,6 @@ class MainFragment : Fragment() {
         super.onDestroyView()
         //解除订阅
         subsicption?.unsubscribe()
-    }
-
-    /**
-     * 提示
-     */
-    fun showToast(str: String) {
-        Toast.makeText(activity, str, Toast.LENGTH_SHORT).show()
-    }
-
-    fun showDiolg() {
-        loading?.show()
-    }
-
-    fun dissLoading() {
-        loading?.dismiss()
     }
 
 }

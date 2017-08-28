@@ -4,6 +4,7 @@ import android.app.Activity
 import android.content.Context
 import android.support.v4.app.Fragment
 import android.util.Log
+import com.example.gp62.cookbook.R
 import com.example.gp62.cookbook.annotion.BindViewID
 import com.google.gson.Gson
 import okhttp3.Cache
@@ -40,7 +41,7 @@ fun getApiData(context: Context) :Retrofit{
             .baseUrl(baseUrl)
             .addConverterFactory(GsonConverterFactory.create())
             .addCallAdapterFactory(RxJavaCallAdapterFactory.create())
-//            .client(okhttp)
+            .client(okhttp)
             .build()
     return retrifit
 }
@@ -87,5 +88,9 @@ fun getId(fragment: Fragment) {
     } catch (e: Exception) {
         e.printStackTrace()
     }
-
 }
+/**
+ * 配置刷新时的动画颜色
+ */
+val colors= intArrayOf(R.color.color_myproperty_aialable, R.color.color_myproperty_huodong
+        , R.color.color_myproperty_daishou, R.color.color_myproperty_dongjie)
